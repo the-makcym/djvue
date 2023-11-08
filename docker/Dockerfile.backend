@@ -1,0 +1,18 @@
+FROM python:3.12-alpine3.18
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+ARG PROJ_DIR=/backend
+
+RUN mkdir -p ${PROJ_DIR}
+COPY ../backend ${PROJ_DIR}
+
+WORKDIR ${PROJ_DIR}
+
+RUN pip install pipenv \
+    pipenv install \
+
+COPY ./entry.sh /entry.sh
+RUN chmod +x /entry.sh
+ENTRYPOINT ["/entry.sh"]
